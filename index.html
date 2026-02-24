@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nuestra Boda</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background: #f8f5f2;
+        color: #333;
+        text-align: center;
+      }
+
+      .hero {
+        padding: 60px 20px;
+        background: url("https://images.unsplash.com/photo-1520854221256-17451cc331bf")
+          center/cover;
+        color: white;
+      }
+
+      .section {
+        padding: 40px 20px;
+      }
+
+      h1,
+      h2 {
+        margin-bottom: 10px;
+      }
+
+      .button {
+        display: inline-block;
+        padding: 12px 20px;
+        margin: 10px;
+        background: #c59d5f;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+      }
+
+      .countdown {
+        font-size: 1.5rem;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="hero">
+      <h1>Nos Casamos</h1>
+      <h2 id="mensajePersonalizado">Te invitamos</h2>
+    </div>
+
+    <div class="section">
+      <h2>Faltan</h2>
+      <div class="countdown" id="contador"></div>
+    </div>
+
+    <div class="section">
+      <h2>Detalles del Evento</h2>
+      <p>20 de Diciembre 2026 - 4:00 PM</p>
+      <a
+        class="button"
+        href="https://www.google.com/maps/search/?api=1&query=Cartagena+Colombia"
+        target="_blank"
+      >
+        Ver Ubicación
+      </a>
+    </div>
+
+    <div class="section">
+      <h2>Confirma tu asistencia</h2>
+      <a class="button" id="botonConfirmar" target="_blank">
+        Confirmar por WhatsApp
+      </a>
+    </div>
+
+    <audio autoplay loop>
+      <source
+        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+        type="audio/mpeg"
+      />
+    </audio>
+
+    <script>
+      // Obtener nombre desde URL
+      const params = new URLSearchParams(window.location.search);
+      const invitado = params.get("invitado") || "con cariño";
+
+      document.getElementById("mensajePersonalizado").innerText =
+        `Te invitamos ${invitado} y familia`;
+
+      // Contador
+      const fechaBoda = new Date("2026-12-20T16:00:00").getTime();
+
+      setInterval(() => {
+        const ahora = new Date().getTime();
+        const diferencia = fechaBoda - ahora;
+
+        const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
+        const minutos = Math.floor((diferencia / (1000 * 60)) % 60);
+
+        document.getElementById("contador").innerText =
+          `${dias} días ${horas} horas ${minutos} minutos`;
+      }, 1000);
+
+      // Botón WhatsApp
+      const numero = "573001234567"; // Cambia por tu número
+      const mensaje = `Confirmamos asistencia: ${invitado}`;
+      const enlace = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+
+      document.getElementById("botonConfirmar").href = enlace;
+    </script>
+  </body>
+</html>
